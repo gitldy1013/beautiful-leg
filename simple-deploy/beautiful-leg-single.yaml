@@ -184,7 +184,7 @@ services:
       - ./root/logs:/root/logs
 
 networks:
-  rmq:
-    name: rmq
-    driver: bridge
   sentinel-master:
+#  rmq:
+#    name: rmq
+#    driver: bridge
