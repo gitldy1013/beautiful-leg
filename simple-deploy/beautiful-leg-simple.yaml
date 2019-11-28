@@ -69,7 +69,7 @@ services:
     container_name: mysql_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: class1013leg
     command:
       --default-authentication-plugin=mysql_native_password
       --character-set-server=utf8mb4
