@@ -1,0 +1,190 @@
+version: "3.5"
+services:
+  # nacos
+  nacos:
+    image: nacos/nacos-server:latest
+    container_name: nacos-standalone-mysql
+    environment:
+      - PREFER_HOST_MODE=hostname
+      - MODE=standalone
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_MASTER_SERVICE_HOST=mysql-master
+      - MYSQL_MASTER_SERVICE_DB_NAME=nacos_devtest
+      - MYSQL_MASTER_SERVICE_PORT=3306
+      - MYSQL_SLAVE_SERVICE_HOST=mysql-slave
+      - MYSQL_SLAVE_SERVICE_PORT=3305
+      - MYSQL_MASTER_SERVICE_USER=nacos
+      - MYSQL_MASTER_SERVICE_PASSWORD=nacos
+    volumes:
+      - ./nacos/standalone-logs:/home/nacos/logs
+      - ./nacos/init:/home/nacos/init.d
+    ports:
+      - "8848:8848"
+      - "9555:9555"
+    depends_on:
+      - mysql-slave
+    restart: on-failure
+  mysql-master:
+    container_name: mysql-master
+    image: nacos/nacos-mysql-master:latest
+    env_file:
+      - ./nacos/env/mysql-common.env
+      - ./nacos/env/mysql-master.env
+    volumes:
+      - ./nacos/mysql-master:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  mysql-slave:
+    container_name: mysql-slave
+    image: nacos/nacos-mysql-slave:latest
+    env_file:
+      - ./nacos/env/mysql-common.env
+      - ./nacos/env/mysql-slave.env
+    volumes:
+      - ./nacos/mysql-slave:/var/lib/mysql
+    ports:
+      - "3305:3306"
+    depends_on:
+      - mysql-master
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    volumes:
+      - ./nacos/prometheus/prometheus-cluster.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - nacos
+    restart: on-failure
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    restart: on-failure
+
+  # mysql
+  db:
+    image: mysql
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --explicit_defaults_for_timestamp=true
+      --lower_case_table_names=1
+    ports:
+      - 6603:3306
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  # redis
+  master:
+    image: redis
+    container_name: redis-master
+    command: redis-server --requirepass test@dbuser2019 --appendonly yes
+    ports:
+      - "6379:6379"
+    networks:
+      - sentinel-master
+  slave1:
+    image: redis
+    container_name: redis-slave-1
+    ports:
+      - "6380:6379"
+    command: redis-server --slaveof redis-master 6379 --requirepass test@dbuser2019 --masterauth test@dbuser2019
+    depends_on:
+      - master
+    networks:
+      - sentinel-master
+  slave2:
+    image: redis
+    container_name: redis-slave-2
+    ports:
+      - "6381:6379"
+    command: redis-server --slaveof redis-master 6379 --requirepass test@dbuser2019 --masterauth test@dbuser2019
+    depends_on:
+      - master
+    networks:
+      - sentinel-master
+
+#  # rocketMq
+#  rmqnamesrv:
+#    image: foxiswho/rocketmq:server
+#    container_name: rmqnamesrv
+#    ports:
+#      - 9876:9876
+#    volumes:
+#      - ./rocketMq/data/logs:/opt/logs
+#      - ./rocketMq/data/store:/opt/store
+#    networks:
+#      rmq:
+#        aliases:
+#          - rmqnamesrv
+#
+#  rmqbroker:
+#    image: foxiswho/rocketmq:broker
+#    container_name: rmqbroker
+#    ports:
+#      - 10909:10909
+#      - 10911:10911
+#    volumes:
+#      - ./rocketMq/data/logs:/opt/logs
+#      - ./rocketMq/data/store:/opt/store
+#      - ./rocketMq/data/brokerconf/broker.conf:/etc/rocketmq/broker.conf
+#    environment:
+#      NAMESRV_ADDR:  "rmqnamesrv:9876"
+#      JAVA_OPTS:  " -Duser.home=/opt"
+#      JAVA_OPT_EXT:  "-server -Xms128m -Xmx128m -Xmn128m"
+#    command: mqbroker -c /etc/rocketmq/broker.conf
+#    depends_on:
+#      - rmqnamesrv
+#    networks:
+#      rmq:
+#        aliases:
+#          - rmqbroker
+#
+#  rmqconsole:
+#    image: styletang/rocketmq-console-ng
+#    container_name: rmqconsole
+#    ports:
+#      - 8181:8080
+#    environment:
+#      JAVA_OPTS:  "-Drocketmq.namesrv.addr=rmqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false"
+#    depends_on:
+#      - rmqnamesrv
+#    networks:
+#      rmq:
+#        aliases:
+#          - rmqconsole
+
+  # sentinel
+  sentinel-dashboard:
+    image: v-sentinel-dashboard
+    container_name: v-sentinel-dashboard
+    restart: on-failure
+    build:
+      context: ./sentinel
+      dockerfile: Dockerfile
+    ports:
+      - "8718:8080"
+      - "8720:8720"
+    environment:
+      - JAVA_OPTS=-Dserver.port=8080 -Dcsp.sentinel.dashboard.server=localhost:8080 -Dproject.name=sentinel-dashboard -Djava.security.egd=file:/dev/./urandom -Dcsp.sentinel.api.port=8720
+    volumes:
+      - ./root/logs:/root/logs
+
+networks:
+  rmq:
+    name: rmq
+    driver: bridge
+  sentinel-master:

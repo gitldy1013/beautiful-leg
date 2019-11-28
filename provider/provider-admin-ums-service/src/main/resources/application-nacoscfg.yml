@@ -1,0 +1,3 @@
+nacos:
+  config:
+    username: admin

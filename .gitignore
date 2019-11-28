@@ -1,0 +1,30 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+## STS ##
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+## IntelliJ IDEA ##
+.idea
+*.iws
+*.iml
+*.ipr
+
+## JRebel ##
+rebel.xml
+
+## MAC ##
+.DS_Store
+
+## Other ##
+/simple-deploy/nacos/standalone-logs/*
+/simple-deploy/nacos/mysql-master/*
+/simple-deploy/nacos/mysql-slave/*
+/simple-deploy/mysql/*
+/simple-deploy/redis/*
+/simple-deploy/root/*
