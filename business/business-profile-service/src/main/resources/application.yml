@@ -1,7 +1,7 @@
 base:
   config:
     oauth:
-      hostname: leg.liudongyang.top
+      hostname: oauth.liudongyang.top
       port: 9001
     nacos:
       hostname: leg.liudongyang.top
