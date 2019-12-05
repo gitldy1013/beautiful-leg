@@ -11,10 +11,10 @@
     </parent>
 
     <groupId>com.leg.blog.plus</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>beautiful-leg</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <url>http://leg.liudongyang.com</url>
+    <url>http://beautiful.liudongyang.com</url>
 
     <modules>
         <module>dependencies</module>
