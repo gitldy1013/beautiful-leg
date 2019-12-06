@@ -92,7 +92,6 @@ services:
       - admin-ums
       - business-profile
       - business-reg
-      - cloud-message
       - cloud-upload
       - business-oauth2
 
