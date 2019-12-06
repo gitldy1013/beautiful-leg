@@ -56,3 +56,10 @@ git push
 
 docker container prune -f
 ```
+
+> 应用部署
+
+```
+docker-compose -f ./simple-deploy/beautiful-leg-admin.yaml up -d
+docker-compose -f ./simple-deploy/beautiful-leg-admin.yaml down
+```

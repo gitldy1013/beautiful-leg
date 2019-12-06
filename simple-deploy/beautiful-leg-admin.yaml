@@ -1,0 +1,96 @@
+version: "3.5"
+services:
+  admin-ums:
+    image: admin-ums
+    container_name: admin-ums
+    restart: on-failure
+    build:
+      context: admin/provider-admin-ums-service
+      dockerfile: Dockerfile
+
+  admin-login:
+    image: admin-login
+    container_name: admin-login
+    restart: on-failure
+    build:
+      context: admin/provider-admin-login-log-service
+      dockerfile: Dockerfile
+
+  business-profile:
+    image: business-profile
+    container_name: business-profile
+    restart: on-failure
+    build:
+      context: admin/business-profile-service
+      dockerfile: Dockerfile
+    depends_on:
+      - admin-login
+      - admin-ums
+
+  business-reg:
+    image: business-reg
+    container_name: business-reg
+    restart: on-failure
+    build:
+      context: admin/business-reg-service
+      dockerfile: Dockerfile
+    depends_on:
+      - admin-login
+      - admin-ums
+
+  cloud-message:
+    image: cloud-message
+    container_name: cloud-message
+    restart: on-failure
+    build:
+      context: admin/cloud-message-service
+      dockerfile: Dockerfile
+    depends_on:
+      - admin-login
+      - admin-ums
+
+  cloud-upload:
+    image: cloud-upload
+    container_name: cloud-upload
+    restart: on-failure
+    build:
+      context: admin/cloud-upload-service
+      dockerfile: Dockerfile
+    depends_on:
+      - admin-login
+      - admin-ums
+
+  business-oauth2:
+    image: business-oauth2
+    container_name: business-oauth2
+    restart: on-failure
+    build:
+      context: admin/business-oauth2-service
+      dockerfile: Dockerfile
+    ports:
+      - 9001:9001
+    depends_on:
+      - admin-login
+      - admin-ums
+      - business-profile
+      - business-reg
+      - cloud-message
+      - cloud-upload
+
+  gateway:
+    image: gateway
+    container_name: gateway
+    restart: on-failure
+    build:
+      context: admin/gateway
+      dockerfile: Dockerfile
+    ports:
+      - 8888:8888
+    depends_on:
+      - admin-login
+      - admin-ums
+      - business-profile
+      - business-reg
+      - cloud-message
+      - cloud-upload
+

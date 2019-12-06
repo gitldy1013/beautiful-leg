@@ -28,3 +28,4 @@ rebel.xml
 /simple-deploy/mysql/*
 /simple-deploy/redis/*
 /simple-deploy/root/*
+/simple-deploy/admin/*/*.jar
