@@ -15,6 +15,7 @@ import com.leg.blog.plus.commons.utils.UserAgentUtils;
 import com.leg.blog.plus.provider.api.UmsAdminService;
 import com.leg.blog.plus.provider.domain.UmsAdmin;
 import eu.bitwalker.useragentutils.Browser;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,6 +50,7 @@ import java.util.Objects;
  * @see com.leg.blog.plus.business.controller
  */
 @RestController
+@Slf4j
 public class LoginController {
 
     @Value("${server.port}")
@@ -78,8 +80,8 @@ public class LoginController {
     @Reference(version = "1.0.0")
     private UmsAdminService umsAdminService;
 
-    @Reference(version = "1.0.0")
-    private MessageService messageService;
+    //@Reference(version = "1.0.0")
+    //private MessageService messageService;
 
     /**
      * 登录
@@ -188,8 +190,9 @@ public class LoginController {
             dto.setIp(ip);
             dto.setAddress(address);
             dto.setUserAgent(browser.getName());
-
-            messageService.sendAdminLoginLog(dto);
+            log.info(dto.toString());
+            //内存原因暂时去掉
+            //messageService.sendAdminLoginLog(dto);
         }
     }
 }
