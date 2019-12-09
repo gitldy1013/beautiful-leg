@@ -26,7 +26,6 @@ services:
     depends_on:
       - admin-login
       - admin-ums
-      - business-oauth2
 
   business-reg:
     image: business-reg
@@ -39,6 +38,17 @@ services:
       - admin-login
       - admin-ums
 
+#  message-admin-login:
+#    image: message-admin-login
+#    container_name: message-admin-login
+#    restart: always
+#    build:
+#      context: admin/message-admin-login-log
+#      dockerfile: Dockerfile
+#    depends_on:
+#      - admin-login
+#      - admin-ums
+
 #  cloud-message:
 #    image: cloud-message
 #    container_name: cloud-message
@@ -49,7 +59,6 @@ services:
 #    depends_on:
 #      - admin-login
 #      - admin-ums
-#      - business-oauth2
 
   cloud-upload:
     image: cloud-upload

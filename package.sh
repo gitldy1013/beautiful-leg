@@ -6,3 +6,4 @@ cp cloud/cloud-message-service/target/cloud-message-service-0.0.1-SNAPSHOT.jar s
 cp cloud/cloud-upload-service/target/cloud-upload-service-0.0.1-SNAPSHOT.jar simple-deploy/admin/cloud-upload-service/cloud-upload-service.jar
 cp business/business-oauth2-service/target/business-oauth2-service-0.0.1-SNAPSHOT.jar simple-deploy/admin/business-oauth2-service/business-oauth2-service.jar
 cp gateway/target/gateway-0.0.1-SNAPSHOT.jar simple-deploy/admin/gateway/gateway.jar
+cp message/message-admin-login-log/target/message-admin-login-log-0.0.1-SNAPSHOT.jar simple-deploy/admin/message-admin-login-log/message-admin-login-log.jar
