@@ -93,6 +93,7 @@
             <artifactId>provider-admin-ums-api</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>com.leg.blog.plus</groupId>
             <artifactId>cloud-message-api</artifactId>
@@ -103,6 +104,7 @@
             <artifactId>cloud-message-feign</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        -->
     </dependencies>
 
     <build>

@@ -62,4 +62,5 @@ docker container prune -f
 ```
 docker-compose -f ./simple-deploy/beautiful-leg-admin.yaml up -d
 docker-compose -f ./simple-deploy/beautiful-leg-admin.yaml down
+docker rmi business-oauth2 gateway cloud-upload business-reg business-profile admin-login admin-ums 
 ```

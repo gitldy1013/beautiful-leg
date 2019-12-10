@@ -7,6 +7,8 @@ services:
     build:
       context: admin/provider-admin-ums-service
       dockerfile: Dockerfile
+    networks:
+      - oauth
 
   admin-login:
     image: admin-login
@@ -15,17 +17,8 @@ services:
     build:
       context: admin/provider-admin-login-log-service
       dockerfile: Dockerfile
-
-  business-profile:
-    image: business-profile
-    container_name: business-profile
-    restart: always
-    build:
-      context: admin/business-profile-service
-      dockerfile: Dockerfile
-    depends_on:
-      - admin-login
-      - admin-ums
+    networks:
+      - oauth
 
   business-reg:
     image: business-reg
@@ -34,9 +27,27 @@ services:
     build:
       context: admin/business-reg-service
       dockerfile: Dockerfile
+    ports:
+      - 9000:9000
     depends_on:
-      - admin-login
       - admin-ums
+      - admin-login
+    networks:
+      - oauth
+
+  business-profile:
+    image: business-profile
+    container_name: business-profile
+    restart: always
+    build:
+      context: admin/business-profile-service
+      dockerfile: Dockerfile
+    ports:
+      - 9002:9002
+    depends_on:
+      - business-reg
+    networks:
+      - oauth
 
 #  message-admin-login:
 #    image: message-admin-login
@@ -67,10 +78,12 @@ services:
     build:
       context: admin/cloud-upload-service
       dockerfile: Dockerfile
+    ports:
+      - 10001:10001
     depends_on:
-      - admin-login
-      - admin-ums
-      - business-oauth2
+      - business-profile
+    networks:
+      - oauth
 
   business-oauth2:
     image: business-oauth2
@@ -82,10 +95,9 @@ services:
     ports:
       - 9001:9001
     depends_on:
-      - admin-login
-      - admin-ums
       - business-profile
-      - business-reg
+    networks:
+      - oauth
 
   gateway:
     image: gateway
@@ -97,10 +109,9 @@ services:
     ports:
       - 8888:8888
     depends_on:
-      - admin-login
-      - admin-ums
-      - business-profile
-      - business-reg
-      - cloud-upload
       - business-oauth2
+    networks:
+      - oauth
 
+networks:
+  oauth:

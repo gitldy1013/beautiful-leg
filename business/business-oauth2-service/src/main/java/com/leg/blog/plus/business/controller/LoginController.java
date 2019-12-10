@@ -6,8 +6,6 @@ import com.leg.blog.plus.business.BusinessStatus;
 import com.leg.blog.plus.business.dto.LoginInfo;
 import com.leg.blog.plus.business.dto.LoginParam;
 import com.leg.blog.plus.business.feign.ProfileFeign;
-import com.leg.blog.plus.cloud.api.MessageService;
-import com.leg.blog.plus.cloud.dto.UmsAdminLoginLogDTO;
 import com.leg.blog.plus.commons.dto.ResponseResult;
 import com.leg.blog.plus.commons.utils.MapperUtils;
 import com.leg.blog.plus.commons.utils.OkHttpClientUtil;
@@ -109,7 +107,7 @@ public class LoginController {
         params.put("client_secret", oauth2ClientSecret);
 
         try {
-            String URL_OAUTH_TOKEN = "http://localhost:"+port+"/oauth/token";
+            String URL_OAUTH_TOKEN = "http://localhost:" + port + "/oauth/token";
             // 解析响应结果封装并返回
             Response response = OkHttpClientUtil.getInstance().postData(URL_OAUTH_TOKEN, params);
             String jsonString = Objects.requireNonNull(response.body()).string();
@@ -184,13 +182,13 @@ public class LoginController {
             String ip = UserAgentUtils.getIpAddr(request);
             String address = UserAgentUtils.getIpInfo(ip).getCity();
 
-            UmsAdminLoginLogDTO dto = new UmsAdminLoginLogDTO();
-            dto.setAdminId(umsAdmin.getId());
-            dto.setCreateTime(new Date());
-            dto.setIp(ip);
-            dto.setAddress(address);
-            dto.setUserAgent(browser.getName());
-            log.info(dto.toString());
+            //UmsAdminLoginLogDTO dto = new UmsAdminLoginLogDTO();
+            //dto.setAdminId(umsAdmin.getId());
+            //dto.setCreateTime(new Date());
+            //dto.setIp(ip);
+            //dto.setAddress(address);
+            //dto.setUserAgent(browser.getName());
+            //log.info(dto.toString());
             //内存原因暂时去掉
             //messageService.sendAdminLoginLog(dto);
         }
