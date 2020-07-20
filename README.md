@@ -302,8 +302,4 @@ PicPick | https://picpick.app/zh/download
 
 自我介绍：最可悲的不过无知，最厌恶的不过人心
 
-![@hualidong](https://avatars3.githubusercontent.com/u/36719363?s=96&v=4)[@DDLoveWorld](https://github.com/DDLoveWorld)
-
-自我介绍：初不识，终不认。
-
 > 最后还希望这个项目能一直做下去，文档不定期更新，代码中存在许多缺陷和问题有待完善，可以star+watch一下。
