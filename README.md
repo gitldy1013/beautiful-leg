@@ -1,4 +1,4 @@
-<p align="center"><a href="https://leg.liudongyang.top" target="_blank" rel="noopener noreferrer"><img width="400" src="./docs/assets/logo.png" alt="Beautiful-Leg logo"></a></p>
+<p align="center"><a href="https://beautiful.liudongyang.top" target="_blank" rel="noopener noreferrer"><img width="400" src="./docs/assets/logo.png" alt="Beautiful-Leg logo"></a></p>
 
 <p align="center">
 <img src="https://circleci.com/gh/alibaba/spring-cloud-alibaba/tree/master.svg?style=svg"/>
