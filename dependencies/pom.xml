@@ -7,13 +7,14 @@
     <artifactId>dependencies</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <url>http://beautiful.liudongyang.top</url>
+    <url>https://beautiful.liudongyang.top</url>
 
     <properties>
         <!-- Commons -->
         <okhttp3.version>4.1.0</okhttp3.version>
         <bitwalker.version>1.21</bitwalker.version>
         <feign-okhttp.version>10.3.0</feign-okhttp.version>
+        <hikaricp.version>3.2.0</hikaricp.version>
 
         <!-- Native Cloud -->
         <dubbo.version>2.7.3</dubbo.version>
