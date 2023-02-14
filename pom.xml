@@ -145,7 +145,7 @@
         <repository>
             <id>mvn-repository</id>
             <name>mvnrepository</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+            <url>https://maven.aliyun.com/nexus/content/groups/public</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
@@ -172,7 +172,7 @@
         <pluginRepository>
             <id>spring-aliyun</id>
             <name>Spring aliyun</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+            <url>https://maven.aliyun.com/nexus/content/repositories/spring-plugin</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
